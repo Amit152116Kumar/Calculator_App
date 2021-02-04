@@ -26,8 +26,8 @@
     <string name="root_x">√X</string>
     <string name="exponent">^</string>
     <string name="inverse_trigno">2nd</string>
-    <string name="deg">deg</string>
-    <string name="rad">rad</string>
+    <string name="deg">Deg</string>
+    <string name="rad">Rad</string>
     <string name="sin">Sin</string>
     <string name="cos">Cos</string>
     <string name="tan">Tan</string>
