@@ -182,7 +182,6 @@ class Operations(private val binding: ActivityMainBinding) {
 
             resultInt += sub.toString()
         }
-
         resultInt = resultInt.plus(sign)
         resultInt = resultInt.reversed()
         Log.d("TAG", "subtraction: resultInt = $resultInt  ")
@@ -191,6 +190,9 @@ class Operations(private val binding: ActivityMainBinding) {
         result = result.plus(resultFloat)
         Log.d("TAG", "subtraction: $result")
         result = result.removeSuffix(".0")
+        if (result.toFloat() == 0f) {
+            return "0"
+        }
         return result
     }
 
@@ -207,6 +209,11 @@ class Operations(private val binding: ActivityMainBinding) {
             binding.editText.textSize = 35F
             binding.outputText.textSize = 35F
         }
+        if (binding.editText.length() >= 18) {
+            binding.editText.textSize = 20F
+            binding.outputText.textSize = 20F
+        }
+
     }
 
 
@@ -217,35 +224,3 @@ class Operations(private val binding: ActivityMainBinding) {
     }
 }
 
-
-//  var num1=number
-//           var num2= output_result
-//           if (num1.length>num2.length)
-//           {
-//               val temp=num1
-//               num1=num2
-//               num2=temp
-//           }
-//           num1=num1.reversed()
-//           num2=num2.reversed()
-//           var carry = 0
-//           var sum: Int
-//
-//           for (i in num1.indices) {
-////             Converting the ASCII to number by -48
-//               sum = (num1[i].toInt()-48) + (num2[i].toInt()-48)
-//               carry = sum / 10
-//               result += (sum % 10).toString()
-//               Log.d("TAG", "sum: ${num1[i].toInt()} + ${num2[i].toInt()}")
-//           }
-//
-//           for (i in num1.length until num2.length) {
-//               sum =  num2[i].toInt()+ carry-48
-//
-//               carry = sum / 10
-//               result += (sum % 10).toString()
-//           }
-//           if (carry != 0) {
-//               result += carry
-//           }
-//           result=result.reversed()

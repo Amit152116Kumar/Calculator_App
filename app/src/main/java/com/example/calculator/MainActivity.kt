@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var countNumber: Long = 0
 
     //    TO NOT ADD TWO OPERATIONS CONTINUOUSLY IN CALCULATOR
-    private var flag = 0
+    private var flag = 1
 
     //    FOR OPERATION CLASS INSTANCE
     private lateinit var operation: Operations
@@ -61,66 +61,74 @@ class MainActivity : AppCompatActivity() {
 
     fun plusOnclickListener(view: View) {
         vibrator.vibrate(30)
-        pushButton = "+"
-        flag = 1
         countNumber = 0
         sumNumber = ""
-        if (sum != "") {
-            output_result = binding.outputText.text.toString().removePrefix("=")
-            inputText = binding.plus.text as String
-            sum += inputText
-            binding.editText.setText(sum)
-            Log.d("TAG", "plusOnclickListener: $output_result")
+        if (flag == 0) {
+            flag = 1
+            pushButton = "+"
+            if (sum != "") {
+                output_result = binding.outputText.text.toString().removePrefix("=")
+                inputText = binding.plus.text as String
+                sum += inputText
+                binding.editText.setText(sum)
+                Log.d("TAG", "plusOnclickListener: $output_result")
+            }
         }
     }
 
     fun minusOnclickListener(view: View) {
         vibrator.vibrate(30)
-        pushButton = "-"
-        flag = 1
         countNumber = 0
         sumNumber = ""
-        if (sum != "") {
-            output_result = binding.outputText.text.toString().removePrefix("=")
-            inputText = binding.minus.text as String
-            sum += inputText
-            binding.editText.setText(sum)
-            Log.d("TAG", "minusOnclickListener: $output_result")
+        if (flag == 0) {
+            flag = 1
+            pushButton = "-"
+            if (sum != "") {
+                output_result = binding.outputText.text.toString().removePrefix("=")
+                inputText = binding.minus.text as String
+                sum += inputText
+                binding.editText.setText(sum)
+                Log.d("TAG", "minusOnclickListener: $output_result")
+            }
         }
     }
 
     fun multiplyOnclickListener(view: View) {
         vibrator.vibrate(30)
-        pushButton = "*"
-        flag = 1
         countNumber = 0
         sumNumber = ""
-        if (sum != "") {
-            output_result = binding.outputText.text.toString().removePrefix("=")
-            inputText = binding.multiply.text as String
-            sum += inputText
-            binding.editText.setText(sum)
-            Log.d("TAG", "multiplyOnclickListener: ${output_result}")
+        if (flag == 0) {
+            flag = 1
+            pushButton = "*"
+            if (sum != "") {
+                output_result = binding.outputText.text.toString().removePrefix("=")
+                inputText = binding.multiply.text as String
+                sum += inputText
+                binding.editText.setText(sum)
+                Log.d("TAG", "multiplyOnclickListener: $output_result")
+            }
         }
     }
 
     fun divideOnclickListener(view: View) {
         vibrator.vibrate(30)
-        pushButton = "/"
-        flag = 1
         countNumber = 0
         sumNumber = ""
-        if (sum != "") {
-            output_result = binding.outputText.text.toString().removePrefix("=")
-            inputText = binding.divide.text as String
-            sum += inputText
-            binding.editText.setText(sum)
-            Log.d("TAG", "divideOnclickListener: ${output_result}")
+        if (flag == 0) {
+            flag = 1
+            pushButton = "/"
+            if (sum != "") {
+                output_result = binding.outputText.text.toString().removePrefix("=")
+                inputText = binding.divide.text as String
+                sum += inputText
+                binding.editText.setText(sum)
+                Log.d("TAG", "divideOnclickListener: $output_result")
+            }
         }
+
     }
 
 
-    @SuppressLint("SetTextI18n")
     fun nineOnclickListener(view: View) {
         vibrator.vibrate(30)
         operation.limit_checker()
@@ -131,17 +139,23 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            if (pushButton == "+") {
-                binding.outputText.text = "=${operation.addition(sumNumber)}"
-            } else if (pushButton == "-") {
-                binding.outputText.text = "=${operation.subtraction(sumNumber)}"
-            } else if (pushButton == "*") {
-                binding.outputText.text = "=${operation.multiplication(sumNumber)}"
-            } else if (pushButton == "/") {
-                binding.outputText.text = "=${operation.division(sumNumber)}"
-            } else {
-                Log.d("TAG", "nineOnclickListener: else")
-                binding.outputText.text = "=$sum"
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
             }
             countNumber++
         }
@@ -151,20 +165,16 @@ class MainActivity : AppCompatActivity() {
     fun dotOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (!sumNumber.contains(".")) {
-            operation.limit_checker()
-            if (countNumber <= 18) {
-                inputText = binding.dot.text as String
-                sumNumber += inputText
-                sum += inputText
-                binding.editText.setText(sum)
-                if (pushButton == "+") {
-                    operation.addition(sumNumber)
-                } else {
-                    Log.d("TAG", "dotOnclickListener: else")
-                    binding.outputText.text = "=$sum"
+        if (sumNumber.isNotEmpty()) {
+            if (!sumNumber.contains(".")) {
+                operation.limit_checker()
+                if (countNumber <= 18) {
+                    inputText = binding.dot.text as String
+                    sumNumber += inputText
+                    sum += inputText
+                    binding.editText.setText(sum)
+                    countNumber++
                 }
-                countNumber++
             }
         }
     }
@@ -173,12 +183,13 @@ class MainActivity : AppCompatActivity() {
         vibrator.vibrate(30)
         binding.editText.textSize = 50F
         binding.outputText.textSize = 50F
-        countNumber = 0
-        flag = 0
-        output_result = ""
         sum = ""
         inputText = ""
         pushButton = ""
+        sumNumber = ""
+        countNumber = 0
+        flag = 1
+        output_result = ""
         binding.editText.setText("")
         binding.outputText.text = "0"
     }
@@ -194,11 +205,25 @@ class MainActivity : AppCompatActivity() {
                 sumNumber += inputText
                 sum += inputText
                 binding.editText.setText(sum)
-                if (pushButton == "+") {
-                    operation.addition(sumNumber)
-                } else {
-                    Log.d("TAG", "zeroOnclickListener: else")
-                    binding.outputText.text = "=$sum"
+                when (pushButton) {
+                    "+" -> {
+                        "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                    }
+                    "-" -> {
+                        "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                    }
+                    "*" -> {
+                        "=${operation.multiplication(sumNumber)}".also {
+                            binding.outputText.text = it
+                        }
+                    }
+                    "/" -> {
+                        "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                    }
+                    else -> {
+                        Log.d("TAG", "nineOnclickListener: else")
+                        "=$sum".also { binding.outputText.text = it }
+                    }
                 }
                 countNumber++
             }
@@ -215,19 +240,265 @@ class MainActivity : AppCompatActivity() {
             binding.editText.setText(sum)
             sumNumber.removeRange(sumNumber.length - 1, sumNumber.length)
             binding.outputText.text = "=$sumNumber"
-        } else {
-
         }
     }
 
-    fun oneOnclickListener(view: View) {}
-    fun twoOnclickListener(view: View) {}
-    fun threeOnclickListener(view: View) {}
-    fun fourOnclickListener(view: View) {}
-    fun fiveOnclickListener(view: View) {}
-    fun sixOnclickListener(view: View) {}
-    fun sevenOnclickListener(view: View) {}
-    fun eightOnclickListener(view: View) {}
+    fun oneOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.one.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun twoOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.two.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun threeOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.three.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun fourOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.four.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun fiveOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.five.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun sixOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.six.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun sevenOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.seven.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
+    fun eightOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        operation.limit_checker()
+        flag = 0
+        if (countNumber <= 18) {
+
+            inputText = binding.eight.text as String
+            sumNumber += inputText
+            sum += inputText
+            binding.editText.setText(sum)
+            when (pushButton) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+            countNumber++
+        }
+    }
+
     fun percentOnclickListener(view: View) {}
     fun equalOnclickListener(view: View) {}
 
