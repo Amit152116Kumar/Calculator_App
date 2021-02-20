@@ -2,6 +2,7 @@ package com.example.calculator
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
@@ -131,10 +132,17 @@ class MainActivity : AppCompatActivity() {
 
     fun nineOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
-        flag = 0
-        if (countNumber <= 18) {
 
+        flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
+
+        if (countNumber <= 18) {
+            operation.limit_checker()
             inputText = binding.nine.text as String
             sumNumber += inputText
             sum += inputText
@@ -161,7 +169,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+
     fun dotOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
@@ -192,13 +200,15 @@ class MainActivity : AppCompatActivity() {
         output_result = ""
         binding.editText.setText("")
         binding.outputText.text = "0"
+        binding.outputText.setTextColor(Color.BLACK)
+        binding.editText.setTextColor(Color.BLACK)
     }
 
-    @SuppressLint("SetTextI18n")
+
     fun zeroOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sumNumber.isNotEmpty()) {
+        if (sum.isNotEmpty()) {
             operation.limit_checker()
             if (countNumber <= 18) {
                 inputText = binding.zero.text as String
@@ -245,10 +255,15 @@ class MainActivity : AppCompatActivity() {
 
     fun oneOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.one.text as String
             sumNumber += inputText
             sum += inputText
@@ -277,10 +292,15 @@ class MainActivity : AppCompatActivity() {
 
     fun twoOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.two.text as String
             sumNumber += inputText
             sum += inputText
@@ -309,10 +329,15 @@ class MainActivity : AppCompatActivity() {
 
     fun threeOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.three.text as String
             sumNumber += inputText
             sum += inputText
@@ -341,10 +366,15 @@ class MainActivity : AppCompatActivity() {
 
     fun fourOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.four.text as String
             sumNumber += inputText
             sum += inputText
@@ -373,10 +403,15 @@ class MainActivity : AppCompatActivity() {
 
     fun fiveOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.five.text as String
             sumNumber += inputText
             sum += inputText
@@ -405,10 +440,15 @@ class MainActivity : AppCompatActivity() {
 
     fun sixOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.six.text as String
             sumNumber += inputText
             sum += inputText
@@ -437,10 +477,15 @@ class MainActivity : AppCompatActivity() {
 
     fun sevenOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.seven.text as String
             sumNumber += inputText
             sum += inputText
@@ -469,10 +514,15 @@ class MainActivity : AppCompatActivity() {
 
     fun eightOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.limit_checker()
         flag = 0
+        if (sum.isEmpty()) {
+            binding.outputText.setTextColor(Color.GRAY)
+            binding.outputText.textSize = 35F
+            binding.editText.setTextColor(Color.BLACK)
+            binding.editText.textSize = 50F
+        }
         if (countNumber <= 18) {
-
+            operation.limit_checker()
             inputText = binding.eight.text as String
             sumNumber += inputText
             sum += inputText
@@ -499,8 +549,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun percentOnclickListener(view: View) {}
-    fun equalOnclickListener(view: View) {}
+    fun percentOnclickListener(view: View) {
+        vibrator.vibrate(30)
+
+    }
+
+    fun equalOnclickListener(view: View) {
+        vibrator.vibrate(30)
+        binding.outputText.textSize = 50F
+        binding.editText.textSize = 35F
+        binding.outputText.setTextColor(Color.BLACK)
+        binding.editText.setTextColor(Color.GRAY)
+        sum = ""
+        pushButton = ""
+        inputText = ""
+        pushButton = ""
+        sumNumber = ""
+        countNumber = 0
+        flag = 1
+        output_result = ""
+    }
 
 
 }

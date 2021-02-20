@@ -200,9 +200,14 @@ class Operations(private val binding: ActivityMainBinding) {
     fun multiplication(number: String): String {
 
         var result = ""
+        val num1 = number.toDouble()
+        val num2 = output_result.toDouble()
 
+        result = (num2 * num1).toString()
+        result = result.removeSuffix(".0")
         return result
     }
+
 
     fun limit_checker() {
         if (binding.editText.length() >= 12) {
@@ -219,7 +224,11 @@ class Operations(private val binding: ActivityMainBinding) {
 
     fun division(number: String): String {
         var result = ""
+        val num1 = number.toDouble()
+        val num2 = output_result.toDouble()
 
+        result = (num2 / num1).toString()
+        result = result.removeSuffix(".0")
         return result
     }
 }
