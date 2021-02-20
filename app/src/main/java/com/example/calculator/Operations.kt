@@ -1,5 +1,6 @@
 package com.example.calculator
 
+import android.graphics.Color
 import android.util.Log
 import com.example.calculator.databinding.ActivityMainBinding
 import kotlin.math.abs
@@ -190,6 +191,7 @@ class Operations(private val binding: ActivityMainBinding) {
         result = result.plus(resultFloat)
         Log.d("TAG", "subtraction: $result")
         result = result.removeSuffix(".0")
+        result = result.removePrefix("0")
         if (result.toFloat() == 0f) {
             return "0"
         }
@@ -208,6 +210,12 @@ class Operations(private val binding: ActivityMainBinding) {
         return result
     }
 
+    fun changeStyle() {
+        binding.outputText.setTextColor(Color.GRAY)
+        binding.outputText.textSize = 35F
+        binding.editText.setTextColor(Color.BLACK)
+        binding.editText.textSize = 50F
+    }
 
     fun limit_checker() {
         if (binding.editText.length() >= 12) {

@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun plusOnclickListener(view: View) {
+        operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         sumNumber = ""
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun minusOnclickListener(view: View) {
+        operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         sumNumber = ""
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun multiplyOnclickListener(view: View) {
+        operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         sumNumber = ""
@@ -112,6 +115,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun divideOnclickListener(view: View) {
+        operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         sumNumber = ""
@@ -132,14 +136,8 @@ class MainActivity : AppCompatActivity() {
 
     fun nineOnclickListener(view: View) {
         vibrator.vibrate(30)
-
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
 
         if (countNumber <= 18) {
             operation.limit_checker()
@@ -172,6 +170,7 @@ class MainActivity : AppCompatActivity() {
 
     fun dotOnclickListener(view: View) {
         vibrator.vibrate(30)
+        operation.changeStyle()
         flag = 0
         if (sumNumber.isNotEmpty()) {
             if (!sumNumber.contains(".")) {
@@ -208,6 +207,7 @@ class MainActivity : AppCompatActivity() {
     fun zeroOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
+        operation.changeStyle()
         if (sum.isNotEmpty()) {
             operation.limit_checker()
             if (countNumber <= 18) {
@@ -256,12 +256,7 @@ class MainActivity : AppCompatActivity() {
     fun oneOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.one.text as String
@@ -293,12 +288,7 @@ class MainActivity : AppCompatActivity() {
     fun twoOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.two.text as String
@@ -330,12 +320,7 @@ class MainActivity : AppCompatActivity() {
     fun threeOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.three.text as String
@@ -367,12 +352,7 @@ class MainActivity : AppCompatActivity() {
     fun fourOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.four.text as String
@@ -404,12 +384,7 @@ class MainActivity : AppCompatActivity() {
     fun fiveOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.five.text as String
@@ -441,12 +416,7 @@ class MainActivity : AppCompatActivity() {
     fun sixOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.six.text as String
@@ -478,12 +448,7 @@ class MainActivity : AppCompatActivity() {
     fun sevenOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.seven.text as String
@@ -515,12 +480,8 @@ class MainActivity : AppCompatActivity() {
     fun eightOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        if (sum.isEmpty()) {
-            binding.outputText.setTextColor(Color.GRAY)
-            binding.outputText.textSize = 35F
-            binding.editText.setTextColor(Color.BLACK)
-            binding.editText.textSize = 50F
-        }
+        operation.changeStyle()
+
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.eight.text as String
@@ -551,6 +512,7 @@ class MainActivity : AppCompatActivity() {
 
     fun percentOnclickListener(view: View) {
         vibrator.vibrate(30)
+        operation.changeStyle()
         flag = 0
         val percent = (sumNumber.toFloat() / 100).toString()
         Log.d("TAG", "percentOnclickListener: $percent")
@@ -583,13 +545,13 @@ class MainActivity : AppCompatActivity() {
         binding.editText.textSize = 35F
         binding.outputText.setTextColor(Color.BLACK)
         binding.editText.setTextColor(Color.GRAY)
-        sum = ""
+        sum = binding.outputText.text.toString().removePrefix("=")
+        sumNumber = binding.outputText.text.toString().removePrefix("=")
         pushButton = ""
         inputText = ""
         pushButton = ""
-        sumNumber = ""
         countNumber = 0
-        flag = 1
+        flag = 0
         output_result = ""
     }
 
