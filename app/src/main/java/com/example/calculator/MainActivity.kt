@@ -551,7 +551,30 @@ class MainActivity : AppCompatActivity() {
 
     fun percentOnclickListener(view: View) {
         vibrator.vibrate(30)
-
+        flag = 0
+        val percent = (sumNumber.toFloat() / 100).toString()
+        Log.d("TAG", "percentOnclickListener: $percent")
+        sum = sum.replace(sumNumber, percent)
+        sumNumber = percent
+        binding.editText.setText(sum)
+        when (pushButton) {
+            "+" -> {
+                "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+            }
+            "-" -> {
+                "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+            }
+            "*" -> {
+                "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+            }
+            "/" -> {
+                "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+            }
+            else -> {
+                Log.d("TAG", "nineOnclickListener: else")
+                "=$sum".also { binding.outputText.text = it }
+            }
+        }
     }
 
     fun equalOnclickListener(view: View) {
