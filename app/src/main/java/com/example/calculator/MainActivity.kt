@@ -253,17 +253,19 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun deleteOnclickListener(view: View) {
         vibrator.vibrate(30)
-        val number="[0-9.]".toRegex()
-        val operator ="[+*/]".toRegex()
-        val lastChar:Char=sum[sum.length-1]
-        if (lastChar.toString().matches(number)){
-            sum=sum.removeSuffix(lastChar.toString())
+        if (sum.isEmpty()) {
+            return
+        }
+        val number = "[0-9.]".toRegex()
+        val operator = "[+*/-]".toRegex()
+        val lastChar: Char = sum[sum.length - 1]
+        if (lastChar.toString().matches(number)) {
+            sum = sum.removeSuffix(lastChar.toString())
 
-            sumNumber=sumNumber.removeSuffix(lastChar.toString())
+            sumNumber = sumNumber.removeSuffix(lastChar.toString())
             binding.editText.setText(sum)
             countNumber--
-        }
-        else if (lastChar.toString().matches(operator)){
+        } else if (lastChar.toString().matches(operator)) {
             pushButton.removeAt(pushButton.lastIndex)
             sum=sum.removeSuffix(lastChar.toString())
             binding.editText.setText(sum)
