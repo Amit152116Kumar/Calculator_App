@@ -25,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     private var inputText = ""
 
     //    FOR THE OPERATION BUTTON
-    private var pushButton = ""
+    private var pushButton = arrayListOf("")
 
     //    TO STORE ONE DIGIT
     private var sumNumber = ""
+
+    private var listNumber= arrayListOf<String>()
 
     //    FOR MAX LIMIT OF ONE DIGIT IN EDIT TEXT
     private var countNumber: Long = 0
@@ -67,9 +69,10 @@ class MainActivity : AppCompatActivity() {
         sumNumber = ""
         if (flag == 0) {
             flag = 1
-            pushButton = "+"
+            pushButton.add("+")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
+                listNumber.add(output_result)
                 inputText = binding.plus.text as String
                 sum += inputText
                 binding.editText.setText(sum)
@@ -85,9 +88,10 @@ class MainActivity : AppCompatActivity() {
         sumNumber = ""
         if (flag == 0) {
             flag = 1
-            pushButton = "-"
+            pushButton.add("-")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
+                listNumber.add(output_result)
                 inputText = binding.minus.text as String
                 sum += inputText
                 binding.editText.setText(sum)
@@ -103,9 +107,10 @@ class MainActivity : AppCompatActivity() {
         sumNumber = ""
         if (flag == 0) {
             flag = 1
-            pushButton = "*"
+            pushButton.add("*")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
+                listNumber.add(output_result)
                 inputText = binding.multiply.text as String
                 sum += inputText
                 binding.editText.setText(sum)
@@ -121,9 +126,10 @@ class MainActivity : AppCompatActivity() {
         sumNumber = ""
         if (flag == 0) {
             flag = 1
-            pushButton = "/"
+            pushButton.add("/")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
+                listNumber.add(output_result)
                 inputText = binding.divide.text as String
                 sum += inputText
                 binding.editText.setText(sum)
@@ -145,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -192,8 +198,9 @@ class MainActivity : AppCompatActivity() {
         binding.outputText.textSize = 50F
         sum = ""
         inputText = ""
-        pushButton = ""
+        pushButton= arrayListOf("")
         sumNumber = ""
+        listNumber = arrayListOf()
         countNumber = 0
         flag = 1
         output_result = ""
@@ -215,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                 sumNumber += inputText
                 sum += inputText
                 binding.editText.setText(sum)
-                when (pushButton) {
+                when (pushButton[pushButton.lastIndex]) {
                     "+" -> {
                         "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                     }
@@ -245,12 +252,66 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun deleteOnclickListener(view: View) {
-        if (sum == sumNumber) {
-            sum.removeRange(sum.length - 1, sum.length)
+        vibrator.vibrate(30)
+        val number="[0-9.]".toRegex()
+        val operator ="[+*/]".toRegex()
+        val lastChar:Char=sum[sum.length-1]
+        if (lastChar.toString().matches(number)){
+            sum=sum.removeSuffix(lastChar.toString())
+
+            sumNumber=sumNumber.removeSuffix(lastChar.toString())
             binding.editText.setText(sum)
-            sumNumber.removeRange(sumNumber.length - 1, sumNumber.length)
-            binding.outputText.text = "=$sumNumber"
+            countNumber--
         }
+        else if (lastChar.toString().matches(operator)){
+            pushButton.removeAt(pushButton.lastIndex)
+            sum=sum.removeSuffix(lastChar.toString())
+            binding.editText.setText(sum)
+            Log.d("TAG", "deleteOnclickListener: $operator")
+        }
+        if (sumNumber.isNotEmpty()){
+            when (pushButton[pushButton.lastIndex]) {
+                "+" -> {
+                    "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber)}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+        }
+        else{
+            when (pushButton[pushButton.lastIndex]) {
+                "+" -> {
+                    "=${operation.addition(sumNumber+"0")}".also { binding.outputText.text = it }
+                }
+                "-" -> {
+                    "=${operation.subtraction(sumNumber+"0")}".also { binding.outputText.text = it }
+                }
+                "*" -> {
+                    "=${operation.multiplication(sumNumber+"1")}".also { binding.outputText.text = it }
+                }
+                "/" -> {
+                    "=${operation.division(sumNumber+"1")}".also { binding.outputText.text = it }
+                }
+                else -> {
+                    Log.d("TAG", "nineOnclickListener: else")
+                    "=$sum".also { binding.outputText.text = it }
+                }
+            }
+        }
+
+
+
     }
 
     fun oneOnclickListener(view: View) {
@@ -263,7 +324,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -295,7 +356,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -327,7 +388,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -359,7 +420,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -391,7 +452,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -423,7 +484,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -455,7 +516,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -488,7 +549,7 @@ class MainActivity : AppCompatActivity() {
             sumNumber += inputText
             sum += inputText
             binding.editText.setText(sum)
-            when (pushButton) {
+            when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
                 }
@@ -519,7 +580,7 @@ class MainActivity : AppCompatActivity() {
         sum = sum.replace(sumNumber, percent)
         sumNumber = percent
         binding.editText.setText(sum)
-        when (pushButton) {
+        when (pushButton[pushButton.lastIndex]) {
             "+" -> {
                 "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
             }
@@ -547,9 +608,8 @@ class MainActivity : AppCompatActivity() {
         binding.editText.setTextColor(Color.GRAY)
         sum = binding.outputText.text.toString().removePrefix("=")
         sumNumber = binding.outputText.text.toString().removePrefix("=")
-        pushButton = ""
+        pushButton= arrayListOf("")
         inputText = ""
-        pushButton = ""
         countNumber = 0
         flag = 0
         output_result = ""

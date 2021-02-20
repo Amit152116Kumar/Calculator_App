@@ -9,7 +9,6 @@ class Operations(private val binding: ActivityMainBinding) {
 
 
     fun addition(number: String): String {
-
         var result: String
         var num1 = number
         var num2 = output_result
