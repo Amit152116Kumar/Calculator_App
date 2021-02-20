@@ -1,7 +1,6 @@
 package com.example.calculator
 
 import android.graphics.Color
-import android.util.Log
 import com.example.calculator.databinding.ActivityMainBinding
 import kotlin.math.abs
 
@@ -56,7 +55,6 @@ class Operations(private val binding: ActivityMainBinding) {
         }
 
 //        ------------------------------------------------
-        Log.d("TAG", "addition: $list1  \t $list2")
 
 //        ADDING THE Decimal PART
 
@@ -89,7 +87,7 @@ class Operations(private val binding: ActivityMainBinding) {
         result = result.plus(resultFloat)
 
         result = result.removeSuffix(".0")
-        Log.d("TAG", "addition: $resultInt \t $resultFloat")
+
         return result
     }
 
@@ -148,7 +146,7 @@ class Operations(private val binding: ActivityMainBinding) {
                 list2[0] = list2[0].plus("0")
             }
         }
-        Log.d("TAG", "subtraciton: list1 = $list1  \t list2 = $list2")
+
 //        SUBTRACTING THE DECIMAL PART
         list1[1] = list1[1].reversed()
         list2[1] = list2[1].reversed()
@@ -166,7 +164,7 @@ class Operations(private val binding: ActivityMainBinding) {
             resultFloat += sub.toString()
         }
         resultFloat = resultFloat.reversed()
-        Log.d("TAG", "subtraction:  resultFloat = $resultFloat")
+
 
 //        ADDING THE Integral PART
 
@@ -184,11 +182,11 @@ class Operations(private val binding: ActivityMainBinding) {
         }
         resultInt = resultInt.plus(sign)
         resultInt = resultInt.reversed()
-        Log.d("TAG", "subtraction: resultInt = $resultInt  ")
+
 
         result = resultInt.plus(".")
         result = result.plus(resultFloat)
-        Log.d("TAG", "subtraction: $result")
+
         result = result.removeSuffix(".0")
         result = result.removePrefix("0")
         if (result.toFloat() == 0f) {

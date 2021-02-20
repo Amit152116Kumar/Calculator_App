@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     //    TO STORE ONE DIGIT
     private var sumNumber = ""
 
-    private var listNumber= arrayListOf<String>()
+    private var listOutput = arrayListOf("")
+    private var listNumber = arrayListOf<String>()
 
     //    FOR MAX LIMIT OF ONE DIGIT IN EDIT TEXT
     private var countNumber: Long = 0
@@ -66,17 +67,17 @@ class MainActivity : AppCompatActivity() {
         operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
+        listNumber.add(sumNumber)
         sumNumber = ""
         if (flag == 0) {
             flag = 1
             pushButton.add("+")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
-                listNumber.add(output_result)
+                listOutput.add(output_result)
                 inputText = binding.plus.text as String
                 sum += inputText
                 binding.editText.setText(sum)
-                Log.d("TAG", "plusOnclickListener: $output_result")
             }
         }
     }
@@ -85,17 +86,17 @@ class MainActivity : AppCompatActivity() {
         operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
+        listNumber.add(sumNumber)
         sumNumber = ""
         if (flag == 0) {
             flag = 1
             pushButton.add("-")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
-                listNumber.add(output_result)
+                listOutput.add(output_result)
                 inputText = binding.minus.text as String
                 sum += inputText
                 binding.editText.setText(sum)
-                Log.d("TAG", "minusOnclickListener: $output_result")
             }
         }
     }
@@ -104,17 +105,17 @@ class MainActivity : AppCompatActivity() {
         operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
+        listNumber.add(sumNumber)
         sumNumber = ""
         if (flag == 0) {
             flag = 1
             pushButton.add("*")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
-                listNumber.add(output_result)
+                listOutput.add(output_result)
                 inputText = binding.multiply.text as String
                 sum += inputText
                 binding.editText.setText(sum)
-                Log.d("TAG", "multiplyOnclickListener: $output_result")
             }
         }
     }
@@ -123,17 +124,17 @@ class MainActivity : AppCompatActivity() {
         operation.changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
+        listNumber.add(sumNumber)
         sumNumber = ""
         if (flag == 0) {
             flag = 1
             pushButton.add("/")
             if (sum != "") {
                 output_result = binding.outputText.text.toString().removePrefix("=")
-                listNumber.add(output_result)
+                listOutput.add(output_result)
                 inputText = binding.divide.text as String
                 sum += inputText
                 binding.editText.setText(sum)
-                Log.d("TAG", "divideOnclickListener: $output_result")
             }
         }
 
@@ -144,7 +145,6 @@ class MainActivity : AppCompatActivity() {
         vibrator.vibrate(30)
         flag = 0
         operation.changeStyle()
-
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.nine.text as String
@@ -165,7 +165,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -200,12 +199,13 @@ class MainActivity : AppCompatActivity() {
         inputText = ""
         pushButton= arrayListOf("")
         sumNumber = ""
-        listNumber = arrayListOf()
+        listOutput = arrayListOf("")
         countNumber = 0
         flag = 1
         output_result = ""
         binding.editText.setText("")
         binding.outputText.text = "0"
+        listNumber.clear()
         binding.outputText.setTextColor(Color.BLACK)
         binding.editText.setTextColor(Color.BLACK)
     }
@@ -238,7 +238,6 @@ class MainActivity : AppCompatActivity() {
                         "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                     }
                     else -> {
-                        Log.d("TAG", "nineOnclickListener: else")
                         "=$sum".also { binding.outputText.text = it }
                     }
                 }
@@ -261,15 +260,24 @@ class MainActivity : AppCompatActivity() {
         val lastChar: Char = sum[sum.length - 1]
         if (lastChar.toString().matches(number)) {
             sum = sum.removeSuffix(lastChar.toString())
+            if (sumNumber.isEmpty()) {
 
+                sumNumber = listNumber[listNumber.lastIndex]
+                output_result = listOutput[listOutput.lastIndex]
+                listNumber.removeAt(listNumber.lastIndex)
+                Log.d("TAG", "deleteOnclickListener: $sumNumber\n $output_result")
+            }
             sumNumber = sumNumber.removeSuffix(lastChar.toString())
             binding.editText.setText(sum)
             countNumber--
         } else if (lastChar.toString().matches(operator)) {
             pushButton.removeAt(pushButton.lastIndex)
-            sum=sum.removeSuffix(lastChar.toString())
+            sum = sum.removeSuffix(lastChar.toString())
+            listOutput.removeAt(listOutput.lastIndex)
+            sumNumber = listNumber[listNumber.lastIndex]
+            output_result = listOutput[listOutput.lastIndex]
+            Log.d("TAG", "delete: $sumNumber $output_result")
             binding.editText.setText(sum)
-            Log.d("TAG", "deleteOnclickListener: $operator")
         }
         if (sumNumber.isNotEmpty()){
             when (pushButton[pushButton.lastIndex]) {
@@ -286,7 +294,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -306,7 +313,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber+"1")}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -340,7 +346,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -372,7 +377,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -404,7 +408,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -436,7 +439,7 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
+
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -468,7 +471,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -500,7 +502,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -532,7 +533,7 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
+
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -544,7 +545,6 @@ class MainActivity : AppCompatActivity() {
         vibrator.vibrate(30)
         flag = 0
         operation.changeStyle()
-
         if (countNumber <= 18) {
             operation.limit_checker()
             inputText = binding.eight.text as String
@@ -565,7 +565,6 @@ class MainActivity : AppCompatActivity() {
                     "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
                 }
                 else -> {
-                    Log.d("TAG", "nineOnclickListener: else")
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
@@ -578,7 +577,6 @@ class MainActivity : AppCompatActivity() {
         operation.changeStyle()
         flag = 0
         val percent = (sumNumber.toFloat() / 100).toString()
-        Log.d("TAG", "percentOnclickListener: $percent")
         sum = sum.replace(sumNumber, percent)
         sumNumber = percent
         binding.editText.setText(sum)
@@ -596,7 +594,6 @@ class MainActivity : AppCompatActivity() {
                 "=${operation.division(sumNumber)}".also { binding.outputText.text = it }
             }
             else -> {
-                Log.d("TAG", "nineOnclickListener: else")
                 "=$sum".also { binding.outputText.text = it }
             }
         }
@@ -608,9 +605,11 @@ class MainActivity : AppCompatActivity() {
         binding.editText.textSize = 35F
         binding.outputText.setTextColor(Color.BLACK)
         binding.editText.setTextColor(Color.GRAY)
-        sum = binding.outputText.text.toString().removePrefix("=")
         sumNumber = binding.outputText.text.toString().removePrefix("=")
-        pushButton= arrayListOf("")
+        sum = sumNumber
+        pushButton = arrayListOf("")
+        listOutput = arrayListOf("")
+        listNumber.clear()
         inputText = ""
         countNumber = 0
         flag = 0
