@@ -28,9 +28,12 @@
     <string name="inverse_trigno">2nd</string>
     <string name="deg">Deg</string>
     <string name="rad">Rad</string>
-    <string name="sin">Sin</string>
-    <string name="cos">Cos</string>
-    <string name="tan">Tan</string>
+    <string name="sin">sin</string>
+    <string name="sin_inverse">sin<sup><small>-1</small></sup></string>
+    <string name="cos">cos</string>
+    <string name="cos_inverse">cos<sup><small>-1</small></sup></string>
+    <string name="tan">tan</string>
+    <string name="tan_inverse">tan<sup><small>-1</small></sup></string>
     <string name="log">log</string>
     <string name="left_bracket">(</string>
     <string name="right_bracket">)</string>

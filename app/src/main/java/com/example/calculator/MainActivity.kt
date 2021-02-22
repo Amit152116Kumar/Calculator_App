@@ -1,6 +1,6 @@
 package com.example.calculator
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -10,11 +10,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.databinding.ActivityMainBinding
 
-const val PI: Double = 3.14159
+
 var output_result: String = ""
-lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var vibrator: Vibrator
 
@@ -59,12 +60,22 @@ class MainActivity : AppCompatActivity() {
                 binding.angleDegree.setText(R.string.deg)
             }
         }
-
-
+        binding.inverseTrigno.setOnClickListener {
+            vibrator.vibrate(30)
+            if (binding.sin.text.toString() == getString(R.string.sin)) {
+                binding.sin.setText(R.string.sin_inverse)
+                binding.cos.setText(R.string.cos_inverse)
+                binding.tan.setText(R.string.tan_inverse)
+            } else if (binding.sin.text.toString() == getString(R.string.sin_inverse)) {
+                binding.sin.setText(R.string.sin)
+                binding.cos.setText(R.string.cos)
+                binding.tan.setText(R.string.tan)
+            }
+        }
     }
 
     fun plusOnclickListener(view: View) {
-        operation.changeStyle()
+        changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         listNumber.add(sumNumber)
@@ -83,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun minusOnclickListener(view: View) {
-        operation.changeStyle()
+        changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         listNumber.add(sumNumber)
@@ -102,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun multiplyOnclickListener(view: View) {
-        operation.changeStyle()
+        changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         listNumber.add(sumNumber)
@@ -121,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun divideOnclickListener(view: View) {
-        operation.changeStyle()
+        changeStyle()
         vibrator.vibrate(30)
         countNumber = 0
         listNumber.add(sumNumber)
@@ -144,9 +155,9 @@ class MainActivity : AppCompatActivity() {
     fun nineOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.nine.text as String
             sumNumber += inputText
             sum += inputText
@@ -175,12 +186,12 @@ class MainActivity : AppCompatActivity() {
 
     fun dotOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.changeStyle()
+        changeStyle()
         flag = 0
         if (sumNumber.isNotEmpty()) {
             if (!sumNumber.contains(".")) {
-                operation.limit_checker()
-                if (countNumber <= 18) {
+                limitChecker()
+                if (countNumber <= 12) {
                     inputText = binding.dot.text as String
                     sumNumber += inputText
                     sum += inputText
@@ -197,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         binding.outputText.textSize = 50F
         sum = ""
         inputText = ""
-        pushButton= arrayListOf("")
+        pushButton = arrayListOf("")
         sumNumber = ""
         listOutput = arrayListOf("")
         countNumber = 0
@@ -214,10 +225,10 @@ class MainActivity : AppCompatActivity() {
     fun zeroOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
+        changeStyle()
         if (sum.isNotEmpty()) {
-            operation.limit_checker()
-            if (countNumber <= 18) {
+            limitChecker()
+            if (countNumber <= 12) {
                 inputText = binding.zero.text as String
                 sumNumber += inputText
                 sum += inputText
@@ -245,11 +256,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
-    @SuppressLint("SetTextI18n")
     fun deleteOnclickListener(view: View) {
         vibrator.vibrate(30)
         if (sum.isEmpty()) {
@@ -279,7 +287,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("TAG", "delete: $sumNumber $output_result")
             binding.editText.setText(sum)
         }
-        if (sumNumber.isNotEmpty()){
+        if (sumNumber.isNotEmpty()) {
             when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
                     "=${operation.addition(sumNumber)}".also { binding.outputText.text = it }
@@ -297,20 +305,23 @@ class MainActivity : AppCompatActivity() {
                     "=$sum".also { binding.outputText.text = it }
                 }
             }
-        }
-        else{
+        } else {
             when (pushButton[pushButton.lastIndex]) {
                 "+" -> {
-                    "=${operation.addition(sumNumber+"0")}".also { binding.outputText.text = it }
+                    "=${operation.addition(sumNumber + "0")}".also { binding.outputText.text = it }
                 }
                 "-" -> {
-                    "=${operation.subtraction(sumNumber+"0")}".also { binding.outputText.text = it }
+                    "=${operation.subtraction(sumNumber + "0")}".also {
+                        binding.outputText.text = it
+                    }
                 }
                 "*" -> {
-                    "=${operation.multiplication(sumNumber+"1")}".also { binding.outputText.text = it }
+                    "=${operation.multiplication(sumNumber + "1")}".also {
+                        binding.outputText.text = it
+                    }
                 }
                 "/" -> {
-                    "=${operation.division(sumNumber+"1")}".also { binding.outputText.text = it }
+                    "=${operation.division(sumNumber + "1")}".also { binding.outputText.text = it }
                 }
                 else -> {
                     "=$sum".also { binding.outputText.text = it }
@@ -319,15 +330,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     fun oneOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.one.text as String
             sumNumber += inputText
             sum += inputText
@@ -356,9 +366,9 @@ class MainActivity : AppCompatActivity() {
     fun twoOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.two.text as String
             sumNumber += inputText
             sum += inputText
@@ -387,9 +397,9 @@ class MainActivity : AppCompatActivity() {
     fun threeOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.three.text as String
             sumNumber += inputText
             sum += inputText
@@ -418,9 +428,9 @@ class MainActivity : AppCompatActivity() {
     fun fourOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.four.text as String
             sumNumber += inputText
             sum += inputText
@@ -450,9 +460,9 @@ class MainActivity : AppCompatActivity() {
     fun fiveOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.five.text as String
             sumNumber += inputText
             sum += inputText
@@ -481,9 +491,9 @@ class MainActivity : AppCompatActivity() {
     fun sixOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.six.text as String
             sumNumber += inputText
             sum += inputText
@@ -512,9 +522,9 @@ class MainActivity : AppCompatActivity() {
     fun sevenOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.seven.text as String
             sumNumber += inputText
             sum += inputText
@@ -544,9 +554,9 @@ class MainActivity : AppCompatActivity() {
     fun eightOnclickListener(view: View) {
         vibrator.vibrate(30)
         flag = 0
-        operation.changeStyle()
-        if (countNumber <= 18) {
-            operation.limit_checker()
+        changeStyle()
+        if (countNumber <= 12) {
+            limitChecker()
             inputText = binding.eight.text as String
             sumNumber += inputText
             sum += inputText
@@ -574,7 +584,7 @@ class MainActivity : AppCompatActivity() {
 
     fun percentOnclickListener(view: View) {
         vibrator.vibrate(30)
-        operation.changeStyle()
+        changeStyle()
         flag = 0
         val percent = (sumNumber.toFloat() / 100).toString()
         sum = sum.replace(sumNumber, percent)
@@ -616,5 +626,23 @@ class MainActivity : AppCompatActivity() {
         output_result = ""
     }
 
+    private fun changeStyle() {
+        binding.outputText.setTextColor(Color.GRAY)
+        binding.outputText.textSize = 35F
+        binding.editText.setTextColor(Color.BLACK)
+        binding.editText.textSize = 50F
+    }
+
+    private fun limitChecker() {
+        if (binding.editText.length() >= 12) {
+            binding.editText.textSize = 35F
+            binding.outputText.textSize = 35F
+        }
+        if (binding.editText.length() >= 18) {
+            binding.editText.textSize = 20F
+            binding.outputText.textSize = 20F
+        }
+
+    }
 
 }

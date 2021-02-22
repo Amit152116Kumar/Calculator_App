@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MotionScene 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
@@ -8,8 +7,7 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000"
         motion:motionInterpolator="cubic(0.43,0.49,0.8,0.8)">
-       <KeyFrameSet>
-       </KeyFrameSet>
+        <KeyFrameSet></KeyFrameSet>
         <OnClick motion:targetId="@id/button" />
     </Transition>
 
@@ -73,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            motion:layout_constraintGuide_percent="0.375"/>
+            motion:layout_constraintGuide_percent="0.45" />
         <Constraint
             android:id="@+id/backspace"
             android:layout_width="0dp"
